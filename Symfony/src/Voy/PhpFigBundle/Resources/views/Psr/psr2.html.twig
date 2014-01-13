@@ -395,28 +395,38 @@ next line, and there MUST be only one argument per line.</p>
 <span class="p">);</span>
 </code></pre></div>
 <h2>5. Control Structures</h2>
+<h2>5. 控制结构</h2>
 
 <p>The general style rules for control structures are as follows:</p>
+<p>控制结构的通用风格规则如下：</p>
 
 <ul>
 <li>There MUST be one space after the control structure keyword</li>
+<li>控制结构关键字后面要有一空格</li>
 <li>There MUST NOT be a space after the opening parenthesis</li>
+<li>左小括号后面不能有空格</li>
 <li>There MUST NOT be a space before the closing parenthesis</li>
+<li>右小括号前面不能有空格</li>
 <li>There MUST be one space between the closing parenthesis and the opening
 brace</li>
+<li>右小括号和左大括号之间必须有一空格</li>
 <li>The structure body MUST be indented once</li>
+<li>结构体必须缩进一次</li>
 <li>The closing brace MUST be on the next line after the body</li>
+<li>右大括号必须在结构体的下一行</li>
 </ul>
 
 <p>The body of each structure MUST be enclosed by braces. This standardizes how
 the structures look, and reduces the likelihood of introducing errors as new
 lines get added to the body.</p>
+<p>结构体必须用括号括起来。结构看来来是标准化的，并且能够减少引入错误的机会。</p>
 
 <h3>5.1. <code>if</code>, <code>elseif</code>, <code>else</code></h3>
 
 <p>An <code>if</code> structure looks like the following. Note the placement of parentheses,
 spaces, and braces; and that <code>else</code> and <code>elseif</code> are on the same line as the
 closing brace from the earlier body.</p>
+<p> <code>if</code> 结构像下面这样。 注意小括号，空格和大括号； <code>else</code> 和 <code>elseif</code> 在前一个结构体的右大括号的同一行。</p>
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="k">if</span> <span class="p">(</span><span class="nv">$expr1</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// if body</span>
@@ -428,6 +438,7 @@ closing brace from the earlier body.</p>
 </code></pre></div>
 <p>The keyword <code>elseif</code> SHOULD be used instead of <code>else if</code> so that all control
 keywords look like single words.</p>
+<p> <code>elseif</code> 应该用 <code>else if</code> 替代， 以便所有的控制结构看来都是一个单词。</p>
 
 <h3>5.2. <code>switch</code>, <code>case</code></h3>
 
@@ -436,6 +447,9 @@ parentheses, spaces, and braces. The <code>case</code> statement MUST be indente
 from <code>switch</code>, and the <code>break</code> keyword (or other terminating keyword) MUST be
 indented at the same level as the <code>case</code> body. There MUST be a comment such as
 <code>// no break</code> when fall-through is intentional in a non-empty <code>case</code> body.</p>
+<p><code>switch</code> 结构是这样的。注意小括号，空格，大括号的位置。 <code>case</code> 必须缩进一次参照 <code>switch</code>,
+    并且<code>break</code> 关键字 (or other terminating keyword) 作为<code>case</code>的体必须在同一等级上缩进。 
+ 当非空的<code>case</code> 体没有中断语句是必须有这样的说明<code>// no break</code>.</p>
 <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="k">switch</span> <span class="p">(</span><span class="nv">$expr</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
@@ -601,21 +615,32 @@ in a function or method call as an argument.</p>
 
 <p>There are many elements of style and practice intentionally omitted by this
 guide. These include but are not limited to:</p>
+<p>本指南中很多元素的风格和实践被故意省略了。这些包括但并不限于以下内容：</p>
 
 <ul>
 <li><p>Declaration of global variables and global constants</p></li>
+<li><p>全局变量和全局常量的声明</p></li>
 <li><p>Declaration of functions</p></li>
+<li><p>函数的声明</p></li>
 <li><p>Operators and assignment</p></li>
+<li><p>运算符和赋值</p></li>
+<li><p>Inter-line alignment</p></li>
 <li><p>Inter-line alignment</p></li>
 <li><p>Comments and documentation blocks</p></li>
+<li><p>评论和文档块</p></li>
 <li><p>Class name prefixes and suffixes</p></li>
+<li><p>类名前缀和后缀</p></li>
 <li><p>Best practices</p></li>
+<li><p>最佳实践</p></li>
 </ul>
 
 <p>Future recommendations MAY revise and extend this guide to address those or
 other elements of style and practice.</p>
+<p>Future recommendations MAY revise and extend this guide to address those or
+other elements of style and practice.</p>
 
 <h2>Appendix A. Survey</h2>
+<h2>附录 A. 调查</h2>
 
 <p>In writing this style guide, the group took a survey of member projects to
 determine common practices.  The survey is retained herein for posterity.</p>
@@ -711,6 +736,7 @@ Is there a blank line after the opening PHP tag?</p>
 A summary of what line the opening braces go on for classes, methods, and control structures.</p>
 
 <h3>A.3. Survey Results</h3>
+<h3>A.3. 调查结果</h3>
 <div class="highlight"><pre><code class="text language-text" data-lang="text">indent_type:
     tab: 7
     2: 1
