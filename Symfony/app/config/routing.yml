@@ -1,0 +1,3 @@
+voy_php_fig:
+    resource: "@VoyPhpFigBundle/Resources/config/routing.yml"
+    prefix:   

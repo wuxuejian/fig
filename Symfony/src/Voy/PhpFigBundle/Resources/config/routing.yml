@@ -1,0 +1,34 @@
+voy_php_fig_homepage:
+    pattern:  /hx/{name}
+    defaults: { _controller: VoyPhpFigBundle:Default:index }
+
+
+voy_php_fig_psr_index:
+    pattern: /{name}/
+    defaults: { _controller: VoyPhpFigBundle:Psr:index,name: index }
+    requirements:
+        name:  index|psr0|psr1|psr2|psr3|psr4|question
+    
+voy_php_fig_psr_psr0:
+    pattern: /psr0
+    defaults: { _controller: VoyPhpFigBundle:Psr:psr0 }
+
+voy_php_fig_psr_psr1:
+    pattern: /psr1
+    defaults: { _controller: VoyPhpFigBundle:Psr:psr1 }
+
+voy_php_fig_psr_psr2:
+    pattern: /psr2
+    defaults: { _controller: VoyPhpFigBundle:Psr:psr2 }
+
+voy_php_fig_psr_psr3:
+    pattern: /psr3
+    defaults: { _controller: VoyPhpFigBundle:Psr:psr3 }
+
+voy_php_fig_psr_psr4:
+    pattern: /psr4
+    defaults: { _controller: VoyPhpFigBundle:Psr:psr4 }
+
+voy_php_fig_psr_question:
+    pattern: /question
+    defaults: { _controller: VoyPhpFigBundle:Psr:question }

@@ -1,0 +1,129 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PHP-FIG — {{titles.psr0}}（Autoloading Standard）{% endblock %}
+
+{% block body %}
+{% include("VoyPhpFigBundle:Psr:header.html.twig") %}
+<div id="content-wrapper">
+    <div class="inner clearfix">
+        <section id="main-content">
+            <h1>自动加载标准</h1>
+
+            <p>为满足互操作性，必须满足以下要求。</p>
+
+            <h2>强制性</h2>
+
+            <ul>
+                <li class='zh'>完整的命名空间（namespace）和类定义（class）必须是下面的结构： 
+                    <code>\&lt;Vendor Name&gt;\(&lt;Namespace&gt;\)*&lt;Class Name&gt;</code>
+                </li>
+                <li>Each namespace must have a top-level namespace (&quot;Vendor Name&quot;).</li>
+                <li class='zh'>每个命名空间必须有顶级命名空间 (&quot;Vendor Name&quot;)。</li>
+                <li>Each namespace can have as many sub-namespaces as it wishes.</li>
+                <li class='zh'>每个命名空间可以有任意多个子命名空间。 </li>
+                <li>Each namespace separator is converted to a <code>DIRECTORY_SEPARATOR</code> when
+                    loading from the file system.</li>
+                <li class='zh'>从文件系统加载类时，所有“命名空间分隔符”转换成 <code>DIRECTORY_SEPARATOR</code> 。</li>
+                <li>Each <code>_</code> character in the CLASS NAME is converted to a
+                    <code>DIRECTORY_SEPARATOR</code>. The <code>_</code> character has no special meaning in the
+                    namespace.</li>
+                <li class='zh'>类名称（CLASS NAME）中的所有 <code>_</code> 字符转换为
+                    <code>DIRECTORY_SEPARATOR</code>。 命名空间中的所有 <code>_</code> 字符不作转换。</li>
+                <li>The fully-qualified namespace and class is suffixed with <code>.php</code> when
+                    loading from the file system.</li>
+                <li class='zh'>当系统加载类时会在命名空间和类后面加上 <code>.php</code> </li>
+                <li>Alphabetic characters in vendor names, namespaces, and class names may
+                    be of any combination of lower case and upper case.</li>
+                <li class='zh'>厂商名（vendor names），命名空间名和类名可以是大写小写字母的任意组合。</li>
+            </ul>
+
+            <h2>示例</h2>
+
+            <ul>
+                <li><code>\Doctrine\Common\IsolatedClassLoader</code> =&gt; <code>/path/to/project/lib/vendor/Doctrine/Common/IsolatedClassLoader.php</code></li>
+                <li><code>\Symfony\Core\Request</code> =&gt; <code>/path/to/project/lib/vendor/Symfony/Core/Request.php</code></li>
+                <li><code>\Zend\Acl</code> =&gt; <code>/path/to/project/lib/vendor/Zend/Acl.php</code></li>
+                <li><code>\Zend\Mail\Message</code> =&gt; <code>/path/to/project/lib/vendor/Zend/Mail/Message.php</code></li>
+            </ul>
+
+            <h2>Underscores in Namespaces and Class Names</h2>
+            <h2>命名空间和类名中包含下划线时</h2>
+
+            <ul>
+                <li><code>\namespace\package\Class_Name</code> =&gt; <code>/path/to/project/lib/vendor/namespace/package/Class/Name.php</code></li>
+                <li><code>\namespace\package_name\Class_Name</code> =&gt; <code>/path/to/project/lib/vendor/namespace/package_name/Class/Name.php</code></li>
+            </ul>
+
+            <p>The standards we set here should be the lowest common denominator for
+                painless autoloader interoperability. You can test that you are
+                following these standards by utilizing this sample SplClassLoader
+                implementation which is able to load PHP 5.3 classes.</p>
+            <p class="zh">这些标准是最低的通用标准。可以使用下面的示例程序来测试这些标准。这个程序可以加载PHP 5.3 的类。（SplClassLoader
+                implementation）</p>
+
+            <h2>SplClassLoader Implementation 示例</h2>
+
+            <p>Below is an example function to simply demonstrate how the above
+                proposed standards are autoloaded.</p>
+            <p class="zh">下面的示例，简单说明了自动加载功能如何实现。</p>
+            <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="k">function</span> <span class="nf">autoload</span><span class="p">(</span><span class="nv">$className</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$className</span> <span class="o">=</span> <span class="nb">ltrim</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="s1">&#39;\\&#39;</span><span class="p">);</span>
+    <span class="nv">$fileName</span>  <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="nv">$namespace</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$lastNsPos</span> <span class="o">=</span> <span class="nb">strrpos</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="s1">&#39;\\&#39;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nv">$namespace</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$lastNsPos</span><span class="p">);</span>
+        <span class="nv">$className</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="nv">$lastNsPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="nv">$fileName</span>  <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;\\&#39;</span><span class="p">,</span> <span class="nx">DIRECTORY_SEPARATOR</span><span class="p">,</span> <span class="nv">$namespace</span><span class="p">)</span> <span class="o">.</span> <span class="nx">DIRECTORY_SEPARATOR</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nv">$fileName</span> <span class="o">.=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="nx">DIRECTORY_SEPARATOR</span><span class="p">,</span> <span class="nv">$className</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;.php&#39;</span><span class="p">;</span>
+
+    <span class="k">require</span> <span class="nv">$fileName</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+            <h2>SplClassLoader Implementation</h2>
+
+            <p>The following gist is a sample SplClassLoader implementation that can
+                load your classes if you follow the autoloader interoperability
+                standards proposed above. It is the current recommended way to load PHP
+                5.3 classes that follow these standards.</p>
+            <p class="zh">如果你的代码遵循了上面的标准，下面gist里面的SplClassLoader implementation就可以自动加载类了。如果PHP 5.3类遵循了这些标准，推荐用这种方式加载类。</p>
+            <ul>
+                <li><a href="http://gist.github.com/221634">http://gist.github.com/221634</a></li>
+            </ul>
+
+
+        </section>
+{% include 'VoyPhpFigBundle:Psr:aside.html.twig' %}
+    </div>
+</div>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1997599-8']);
+    _gaq.push(['_setDomainName', 'php-fig.org']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = 'https://ssl.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/voyphpfig/css/stylesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/voyphpfig/css/pygment_trac.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/voyphpfig/css/print.css') }}"  media="print">
+{% endblock %}
+

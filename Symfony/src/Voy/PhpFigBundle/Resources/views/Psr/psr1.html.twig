@@ -1,0 +1,211 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}PHP-FIG — {{titles.psr1}}（Base Coding Standard）{% endblock %}
+
+{% block body %}
+{% include("VoyPhpFigBundle:Psr:header.html.twig") %}
+            <div id="content-wrapper">
+                <div class="inner clearfix">
+                    <section id="main-content">
+                        
+                        <h1>Basic Coding Standard</h1>
+                        <h1>基本编码标准</h1>
+                        <p>This section of the standard comprises what should be considered the standard
+                            coding elements that are required to ensure a high level of technical
+                            interoperability between shared PHP code.</p>
+                        <p>这部分包含了那些必须考虑的标准，这些元素确保共享的PHP代码有良好的互操作性。</p>
+
+                        <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
+                            &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+                            interpreted as described in <a href="http://www.ietf.org/rfc/rfc2119.txt">RFC 2119</a>.</p>
+                        <p>这些关键字 &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
+                            &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; 在这篇文档中有解释说明 <a href="http://www.ietf.org/rfc/rfc2119.txt">RFC 2119</a>。</p>
+
+                        <h2>1. 概述</h2>
+
+                        <ul>
+                            <li><p>Files MUST use only <code>&lt;?php</code> and <code>&lt;?=</code> tags.</p></li>
+                            <li><p>文件必须且只能使用 <code>&lt;?php</code> and <code>&lt;?=</code> 标签。</p></li>
+                            <li><p>Files MUST use only UTF-8 without BOM for PHP code.</p></li>
+                            <li><p>PHP代码必须且只能使用UTF-8 without BOM。</p></li>
+                            <li><p>Files SHOULD <em>either</em> declare symbols (classes, functions, constants, etc.)
+                                    <em>or</em> cause side-effects (e.g. generate output, change .ini settings, etc.)
+                                    but SHOULD NOT do both.</p></li>
+                            <li><p>Namespaces and classes MUST follow <a href="{{ path('voy_php_fig_psr_psr0') }}">PSR-0</a>.</p></li>
+                            <li><p>命名空间和类必须遵循 <a href="{{ path('voy_php_fig_psr_psr0') }}">PSR-0</a>。</p></li>
+                            <li><p>Class names MUST be declared in <code>StudlyCaps</code>.</p></li>
+                            <li><p>类名必须使用 <code>StudlyCaps</code>。参考：<a href="http://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB" ></a></p></li>
+                            <li><p>Class constants MUST be declared in all upper case with underscore separators.</p></li>
+                            <li><p>定义类常量必须使用大写并且已下划线分隔。</p></li>
+                            <li><p>Method names MUST be declared in <code>camelCase</code>.</p></li>
+                            <li><p>声明类方法必须使用 小驼峰命名格式 <code>camelCase</code>。</p></li>
+                        </ul>
+
+                        <h2>2. Files</h2>
+
+                        <h3>2.1. PHP 标签</h3>
+
+                        <p>PHP code MUST use the long <code>&lt;?php ?&gt;</code> tags or the short-echo <code>&lt;?= ?&gt;</code> tags; it
+                            MUST NOT use the other tag variations.</p>
+                        <p>PHP 代码必须使用长标签<code>&lt;?php ?&gt;</code> 或者短echo标签 <code>&lt;?= ?&gt;</code> ； 不能使用其它的标签变种。</p>
+
+                        <h3>2.2. Character Encoding</h3>
+                        <h3>2.2. 字符编码</h3>
+
+                        <p>PHP code MUST use only UTF-8 without BOM.</p>
+                        <p>PHP 代码只能使用不带BOM的 UTF-8格式。</p>
+
+                        <h3>2.3. Side Effects</h3>
+
+                        <p>A file SHOULD declare new symbols (classes, functions, constants,
+                            etc.) and cause no other side effects, or it SHOULD execute logic with side
+                            effects, but SHOULD NOT do both.</p>
+
+                        <p>The phrase &quot;side effects&quot; means execution of logic not directly related to
+                            declaring classes, functions, constants, etc., <em>merely from including the
+                                file</em>.</p>
+
+                        <p>&quot;Side effects&quot; include but are not limited to: generating output, explicit
+                            use of <code>require</code> or <code>include</code>, connecting to external services, modifying ini
+                            settings, emitting errors or exceptions, modifying global or static variables,
+                            reading from or writing to a file, and so on.</p>
+
+                        <p>The following is an example of a file with both declarations and side effects;
+                            i.e, an example of what to avoid:</p>
+                        <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// side effect: change ini settings</span>
+<span class="nb">ini_set</span><span class="p">(</span><span class="s1">&#39;error_reporting&#39;</span><span class="p">,</span> <span class="k">E_ALL</span><span class="p">);</span>
+
+<span class="c1">// side effect: loads a file</span>
+<span class="k">include</span> <span class="s2">&quot;file.php&quot;</span><span class="p">;</span>
+
+<span class="c1">// side effect: generates output</span>
+<span class="k">echo</span> <span class="s2">&quot;&lt;html&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+
+<span class="c1">// declaration</span>
+<span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// function body</span>
+<span class="p">}</span>
+</code></pre></div>
+                        <p>The following example is of a file that contains declarations without side
+                            effects; i.e., an example of what to emulate:</p>
+                        <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// declaration</span>
+<span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// function body</span>
+<span class="p">}</span>
+
+<span class="c1">// conditional declaration is *not* a side effect</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">function_exists</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// function body</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+                        <h2>3. Namespace and Class Names</h2>
+
+                        <p>Namespaces and classes MUST follow <a href="{{ path('voy_php_fig_psr_psr0') }}">PSR-0</a>.</p>
+                        <p>命名空间和类必须遵循 <a href="{{ path('voy_php_fig_psr_psr0') }}">PSR-0</a>。</p>
+                        
+                        <p>This means each class is in a file by itself, and is in a namespace of at
+                            least one level: a top-level vendor name.</p>
+                        <p>这意味着一个文件只能包含一个类，并且至少在一级命名空间下：顶级Vendor name。</p>
+
+                        <p>Class names MUST be declared in <code>StudlyCaps</code>.</p>
+                        <p>类名应该用大写驼峰格式 <code>StudlyCaps</code>。</p>
+
+                        <p>Code written for PHP 5.3 and after MUST use formal namespaces.</p>
+                        <p>PHP 5.3 或者更高版本的 代码 应该使用正式命名空间。</p>
+
+                        <p>示 例:</p>
+                        <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// PHP 5.3 and later:</span>
+<span class="k">namespace</span> <span class="nx">Vendor\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+                        <p>Code written for 5.2.x and before SHOULD use the pseudo-namespacing convention
+                            of <code>Vendor_</code> prefixes on class names.</p>
+                        <p>PHP 5.2.x 或者更早版本的代码应该使用伪命名空间惯例。类名前还要加前缀 <code>Vendor_</code> 。</p>
+                        <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// PHP 5.2.x and earlier:</span>
+<span class="k">class</span> <span class="nc">Vendor_Model_Foo</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+                        <h2>4. Class Constants, Properties, and Methods</h2>
+
+                        <p>The term &quot;class&quot; refers to all classes, interfaces, and traits.</p>
+                        <p> &quot;class&quot; 指的是所有的类，接口 和 traits.</p>
+
+                        <h3>4.1. Constants</h3>
+
+                        <p>Class constants MUST be declared in all upper case with underscore separators.</p>
+                        <p>定义类常量必须使用大写并且已下划线分隔。</p>
+                           <p> 示 例:</p>
+                        <div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">Vendor\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">VERSION</span> <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">DATE_APPROVED</span> <span class="o">=</span> <span class="s1">&#39;2012-06-01&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+                        <h3>4.2. Properties</h3>
+
+                        <p>This guide intentionally avoids any recommendation regarding the use of
+                            <code>$StudlyCaps</code>, <code>$camelCase</code>, or <code>$under_score</code> property names.</p>
+                        <p>本指南刻意避免任何推荐 regarding the use of
+                            <code>$StudlyCaps</code>, <code>$camelCase</code>, or <code>$under_score</code> property names.</p>
+
+                        <p>Whatever naming convention is used SHOULD be applied consistently within a
+                            reasonable scope. That scope may be vendor-level, package-level, class-level,
+                            or method-level.</p>
+                        <p>任何命名约定都应该在一定合理的范围内使用。范围级别包括vendor-level，package-level, class-level 或 method-level</p>
+
+                        <h3>4.3. Methods</h3>
+
+                        <p>Method names MUST be declared in <code>camelCase()</code>.</p>
+                        <p>方法名必须用 <code>camelCase()</code>声明。</p>
+
+
+                    </section>
+
+{% include 'VoyPhpFigBundle:Psr:aside.html.twig' %}
+                </div>
+            </div>
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-1997599-8']);
+                _gaq.push(['_setDomainName', 'php-fig.org']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = 'https://ssl.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                })();
+                </script>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+                <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+                <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/voyphpfig/css/stylesheet.css') }}">
+                <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/voyphpfig/css/pygment_trac.css') }}">
+                <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/voyphpfig/css/print.css') }}"  media="print">
+{% endblock %}
+
