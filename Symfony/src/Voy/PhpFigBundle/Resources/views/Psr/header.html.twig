@@ -7,6 +7,14 @@
     </div>
 </header>
 <style type="text/css">
+        
+.en {
+    {% if lang == 'en' %}
+    display: block;
+    {% else %}
+    display: none;
+    {% endif %}
+}
 .zh {
     background-color: rgb(180,255,180);
 }

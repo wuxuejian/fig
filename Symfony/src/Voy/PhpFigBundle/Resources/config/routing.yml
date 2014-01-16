@@ -5,7 +5,7 @@ voy_php_fig_homepage:
 
 voy_php_fig_psr_index:
     pattern: /{name}/
-    defaults: { _controller: VoyPhpFigBundle:Psr:index,name: index }
+    defaults: { _controller: VoyPhpFigBundle:Psr:index, name: index }
     requirements:
         name:  index|psr0|psr1|psr2|psr3|psr4|question
     

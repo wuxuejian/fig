@@ -6,11 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PsrController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction($lang='en',$name='index')
     {
-        
+       // echo $lang;
         $twigData = array();
         $twigData['titles'] = $this->pageTitle();
+        $twigData['lang'] = $lang;
         return $this->render('VoyPhpFigBundle:Psr:'.$name.'.html.twig',$twigData);
     }
     public function psr0Action()
